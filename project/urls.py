@@ -19,6 +19,4 @@ urlpatterns = [
     url(r'^chart/$', views.chart ,name ="chart"),
     url(r'^check/$', views.check ,name ="check"),
 	url(r'^contact/$', views.contact ,name ="contact"),  
-    url(r'^test/$', views.test ,name ="test"),   
-    url(r'^data/$', views.data ,name ="data"),
 ]

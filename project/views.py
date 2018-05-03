@@ -24,9 +24,11 @@ def index(request):
 
 def getdata(request):
 	if request.method=='GET' :
-		data = request.GET['value']
+		data = request.GET['temperature']
+		data1 = request.GET['humidity']
 		obj=sensor()
 		obj.sensor_value=data
+		obj.sensor_value1=data1
 		obj.save()
 		return HttpResponse("data saved in db")
 	else:
@@ -35,7 +37,14 @@ def getdata(request):
 
 @login_required(login_url='/sensor/login_access')	
 def dashboard(request):
-	context = {}
+	temperature=[]
+	humidity = []
+	for i in range(1,10):
+		obj = sensor.objects.all()[len(sensor.objects.all()) - i]
+		tem,hum = obj.split(" ")
+		temperature.append(int(tem))
+		humidity.append(int(hum))
+	context={'temperature' : temperature,'humidity':humidity}
 	return render(request,'project/about.html',context)
 
 def chart(request):
@@ -94,9 +103,4 @@ def logout_view(request):
 	logout(request)
 	return redirect('/')
 
-
-
-def test(request):
-	context = {}
-	return render(request,'project/test.html',context)
 
