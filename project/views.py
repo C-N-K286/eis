@@ -15,11 +15,12 @@ from django.contrib.auth import authenticate,login,logout
 # Create your views here
 def index(request):
 	data = []
+	active=1
 	for i in range(1,10):
 		obj = sensor.objects.all()[len(sensor.objects.all()) - i]
 		data.append(obj.sensor_value)
 	data = [list(map(int, x)) for x in data]
-	context={'data' : data}
+	context={'data' : data,'active':active}
 	return render(request,'project/index.html',context)
 
 def getdata(request):
@@ -35,7 +36,8 @@ def getdata(request):
 
 @login_required(login_url='/sensor/login_access')	
 def dashboard(request):
-	context = {}
+	active=1
+	context = {'active':active}
 	return render(request,'project/about.html',context)
 
 def chart(request):
