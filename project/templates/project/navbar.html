@@ -40,9 +40,11 @@
 
 	<link rel="stylesheet" href="{% static "css/style.css" %}">
 
-
+{% block style %}
+{% endblock %}
 	
 	</head>
+	
 	<body>
 		<div id="fh5co-wrapper">
 		<div id="fh5co-page">
@@ -60,11 +62,12 @@
 									<a href="/index">Home</a>
 								</li>
 								<li class="active">
+
 									<a href="/about" class="fh5co-sub-ddown">DashBoard</a>
 									 <ul class="fh5co-sub-menu">
-										<li><a href="#">Station - 1</a></li>
-										<li><a href="#">Station - 2</a></li>
-										<li><a href="#">Station - 3</a></li> 
+										<li><a href="/about" onclick="load(); draw(90,'myCanvas'); draw(100,'myCanvas1'); ">Station - 1</a></li>
+										<li><a href="/about/st2" onclick="load(); draw(150,'myCanvas'); draw(120,'myCanvas1');">Station - 2</a></li>
+										<li><a href="/about/st3" onclick="load(); draw(130,'myCanvas'); draw(150,'myCanvas1');">Station - 3</a></li> 
 									</ul>
 								</li>
 								<li><a href="/contact">Contact</a></li>

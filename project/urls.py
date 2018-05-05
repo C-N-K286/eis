@@ -13,11 +13,9 @@ urlpatterns = [
 
 
     url(r'^index/$', views.index ,name = "index"),
-    #url(r'^about.html/index.html/$', views.index ,name = "index"),
     url(r'^get/$', views.getdata ,name ="get"),
     url(r'^about/$', views.dashboard ,name ="dashboard"),
-    url(r'^chart/$', views.chart ,name ="chart"),
-    url(r'^check/$', views.check ,name ="check"),
+    url(r'^about/st2/$', views.dashboardst2 ,name ="dashboardst2"),
+    url(r'^about/st3/$', views.dashboardst3 ,name ="dashboardst3"),
 	url(r'^contact/$', views.contact ,name ="contact"),  
-    url(r'^test/$', views.test ,name ="test"),
 ]

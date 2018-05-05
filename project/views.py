@@ -11,23 +11,24 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
-
+from random import randint
 # Create your views here
 def index(request):
 	data = []
-	active=1
-	for i in range(1,10):
+	for i in range(1,11):
 		obj = sensor.objects.all()[len(sensor.objects.all()) - i]
 		data.append(obj.sensor_value)
 	data = [list(map(int, x)) for x in data]
-	context={'data' : data,'active':active}
+	context={'data' : data}
 	return render(request,'project/index.html',context)
 
 def getdata(request):
 	if request.method=='GET' :
-		data = request.GET['value']
+		data = request.GET['temperature']
+		data1 = request.GET['humidity']
 		obj=sensor()
 		obj.sensor_value=data
+		obj.sensor_value1=data1
 		obj.save()
 		return HttpResponse("data saved in db")
 	else:
@@ -36,31 +37,33 @@ def getdata(request):
 
 @login_required(login_url='/sensor/login_access')	
 def dashboard(request):
-	active=1
-	context = {'active':active}
+	temperature=[]
+	humidity = []
+	for i in range(1,11):
+		obj = sensor.objects.all()[len(sensor.objects.all()) - i]
+		print obj
+		print obj.sensor_value,obj.sensor_value1
+		#tem,hum = obj.split(" ")
+		temperature.append(int(obj.sensor_value))
+		humidity.append(int(obj.sensor_value1))
+	context={'temperature' : temperature,'humidity':humidity}
 	return render(request,'project/about.html',context)
-
-def chart(request):
-	data = []
-	for i in range(1,10):
-		obj = sensor.objects.all()[len(sensor.objects.all()) - i]
-		data.append(obj.sensor_value)
-	data = [list(map(int, x)) for x in data]
-	context={'data' : data}
-	return render(request,'project/chart.html',context)
-
-
-def check(request):
-	data = []
-	for i in range(1,10):
-		obj = sensor.objects.all()[len(sensor.objects.all()) - i]
-		data.append(obj.sensor_value)
-	data = [list(map(int, x)) for x in data]
-	context={'data' : data}
-	return render(request,'project/check.html',context)
-
-
-
+def dashboardst2(request):
+	temperature=[]
+	humidity = []
+	for i in range(1,11):
+		temperature.append(randint(30,40))
+		humidity.append(randint(60,70))
+	context={'temperature' : temperature,'humidity':humidity}
+	return render(request,'project/about.html',context)
+def dashboardst3(request):
+	temperature=[]
+	humidity = []
+	for i in range(1,11):
+		temperature.append(randint(30,40))
+		humidity.append(randint(60,70))
+	context={'temperature' : temperature,'humidity':humidity}
+	return render(request,'project/about.html',context)
 @login_required(login_url='/sensor/login_access')	
 def contact(request):
 	context = {}
@@ -96,9 +99,4 @@ def logout_view(request):
 	logout(request)
 	return redirect('/')
 
-
-
-def test(request):
-	context = {}
-	return render(request,'project/test.html',context)
 
